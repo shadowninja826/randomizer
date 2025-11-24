@@ -1,12 +1,13 @@
 # 🎲 High-Entropy Randomizer (randomizer)
 
+
 A simple C utility that generates a highly unpredictable seed by hashing the current system time at nanosecond precision using the cryptographic **SHA-256** algorithm. The resulting 32-byte hash is outputted as a sequence of space-separated **decimal integers** (0-255).
 
 ## 🚀 Why Use This?
 
 Standard C `rand()` functions often use low-entropy seeds like `time(NULL)`. This program is designed to create a much more unpredictable, high-quality seed by leveraging:
 
-1.  **Nanosecond Precision:** Capturing minute, difficult-to-predict variations in system timing.
+1.  **Nanosecond Precision:** Capturing the full time value (including the nanosecond component, not just seconds) to capture minute, difficult-to-predict variations in system timing.
 2.  **Cryptographic Hashing (SHA-256):** Ensuring even tiny changes in the input (time) result in a drastically different, well-distributed 32-byte output.
 3.  **Decimal Output:** The 32 decimal values are easy to parse and use as a source of randomness in other scripts or applications.
 
@@ -50,3 +51,10 @@ You can easily pipe this output into a script or another program. For example, t
 SEED=$(./randomizer | awk '{print $1}')
 echo "Using seed: $SEED"
 ```
+
+### 📜 Technical Details
+**Entropy Source:** The total number of nanoseconds elapsed since the epoch (using `clock_gettime(CLOCK_REALTIME)` on Linux or `GetSystemTimePreciseAsFileTime` on Windows). Hashing this large, high-resolution number ensures maximum input variability.
+
+**Hashing Algorithm:** SHA-256 via the **OpenSSL EVP** interface.
+
+**Output Format:** 32 decimal bytes (0-255), separated by spaces by default.
