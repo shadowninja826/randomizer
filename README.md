@@ -31,12 +31,17 @@ gcc -o randomizer randomizer.c -lssl -lcrypto
 Simply execute the compiled binary:
 
 ```
-./randomizer
+./randomizer [OPTIONS]
+
+-h, --help Displays detailed usage instructions and exits.
+-n, --nospace Outputs the decimal bytes as a single, contiguous, large number (removes spaces).
 ```
 ### Example Output
 The program will output 32 decimal integers, each representing one byte of the SHA-256 hash:
 ```
 201 153 63 17 144 67 187 170 59 114 33 43 51 243 41 234 62 111 201 234 9 248 3 194 104 157 20 49 196 228 80 212
+or
+20115363171446718717059114334351243412346211120123492483194104157204919622880212
 ```
 
 ### Using the Output
